@@ -146,25 +146,36 @@ void CircularList<T>::animateMovement(bool clockwise, DoubleNode<T>* where)
 template < class T >
 void CircularList<T>::remove(int index) 
 {
+	
    //DO THIS
    //remember to move loc and loc_pos to the location of the removal
    //remember to delete the node after it has been removed from the list
-   if (index >= 1 && index <= sze) 
+  if (index >= 1 && index <= sze) 
    {
-		loc = find(index);
 
       if (sze == 1) //special case
       {
-			
-      }
+		removeAll();
+		loc_pos = 0;
+		sze = 0;
+		
+	  }
       else
       {
-         //use local variables
-		
-
+		DoubleNode<T>* current = find(index);
+		DoubleNode<T>* prev = current->getPrev();
+		DoubleNode<T>* next = current->getNext();
+		//use local variables
+		prev->setNext(next);
+		next->setPrev(prev);
+		current->setNext(NULL);
+		current->setPrev(NULL);
+		loc=next;
+		loc_pos=index;
+		delete current;
       }
       sze--;
-   } 
+   }
 }
 
 template < class T >
